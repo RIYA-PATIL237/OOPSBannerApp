@@ -1,31 +1,18 @@
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * OOPSBannerApp
- * UC7 – Store Character Pattern in a Class
+ * UC8 – Use Map for Character Patterns and Render via Function
  */
 
 public class OOPSBannerApp {
 
-    // Static Inner Class
-    static class CharacterPattern {
-
-        private char character;
-        private String[] pattern;
-
-        // Constructor
-        public CharacterPattern(char character, String[] pattern) {
-            this.character = character;
-            this.pattern = pattern;
-        }
-
-        // Getter
-        public String[] getPattern() {
-            return pattern;
-        }
-    }
-
     public static void main(String[] args) {
 
-        CharacterPattern o = new CharacterPattern('O', new String[]{
+        Map<Character, String[]> patternMap = new HashMap<>();
+
+        patternMap.put('O', new String[]{
                 " *** ",
                 "*   *",
                 "*   *",
@@ -33,7 +20,7 @@ public class OOPSBannerApp {
                 " *** "
         });
 
-        CharacterPattern p = new CharacterPattern('P', new String[]{
+        patternMap.put('P', new String[]{
                 "**** ",
                 "*   *",
                 "**** ",
@@ -41,7 +28,7 @@ public class OOPSBannerApp {
                 "*    "
         });
 
-        CharacterPattern s = new CharacterPattern('S', new String[]{
+        patternMap.put('S', new String[]{
                 " ****",
                 "*    ",
                 " *** ",
@@ -49,21 +36,24 @@ public class OOPSBannerApp {
                 "**** "
         });
 
-        String word = "OOPS";
+        renderBanner("OOPS", patternMap);
+    }
 
-        // Loop row by row
-        for (int i = 0; i < 5; i++) {
+    // Separate render function
+    public static void renderBanner(String word, Map<Character, String[]> map) {
+
+        int height = 5;
+
+        for (int row = 0; row < height; row++) {
 
             StringBuilder line = new StringBuilder();
 
             for (char c : word.toCharArray()) {
 
-                if (c == 'O') {
-                    line.append(o.getPattern()[i]).append("  ");
-                } else if (c == 'P') {
-                    line.append(p.getPattern()[i]).append("  ");
-                } else if (c == 'S') {
-                    line.append(s.getPattern()[i]).append("  ");
+                String[] pattern = map.get(c);
+
+                if (pattern != null) {
+                    line.append(pattern[row]).append("  ");
                 }
             }
 
